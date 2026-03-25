@@ -3,167 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enreque Coleman | Cybersecurity & Cloud Portfolio</title>
+    <title>Enreque Coleman | DFIR & Cyber Security Portfolio</title>
     <style>
         :root {
-            --bg: #0d1117;
-            --card-bg: #161b22;
-            --text: #c9d1d9;
-            --accent: #58a6ff;
-            --secondary: #8b949e;
-            --border: #30363d;
+            --bg-color: #05070a;
+            --surface-color: #0f172a;
+            --accent-color: #00f2ff; /* Cyber Blue */
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --border-color: #1e293b;
+            --success: #10b981;
+            --warning: #f59e0b;
         }
 
+        * { box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
+            font-family: 'Fira Code', 'Courier New', monospace;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
             line-height: 1.6;
             margin: 0;
-            padding: 0;
         }
 
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+
+        /* Header / Terminal Style */
         header {
-            padding: 4rem 2rem;
-            text-align: center;
-            background: linear-gradient(180deg, #161b22 0%, #0d1117 100%);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
+            border: 1px solid var(--border-color);
+            background: var(--surface-color);
             padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, var(--accent-color), #7000ff);
         }
 
-        h1 { color: #fff; margin-bottom: 0.5rem; font-size: 2.5rem; }
-        h2 { color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; margin-top: 3rem; }
+        h1 { font-size: 2.5rem; margin: 0; color: var(--accent-color); }
+        .status-bar { font-size: 0.8rem; color: var(--success); margin-bottom: 1rem; }
         
-        .tagline { font-size: 1.2rem; color: var(--secondary); margin-bottom: 2rem; }
+        /* Navigation */
+        nav { margin-top: 1rem; }
+        nav a { color: var(--text-secondary); text-decoration: none; margin-right: 1.5rem; font-size: 0.9rem; }
+        nav a:hover { color: var(--accent-color); }
+
+        /* Grid Layout */
+        h2 { 
+            font-size: 1.5rem; 
+            border-left: 4px solid var(--accent-color); 
+            padding-left: 15px; 
+            margin: 3rem 0 1.5rem; 
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
 
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
+            gap: 20px;
         }
 
+        /* Card Component */
         .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 1.5rem;
-            transition: transform 0.2s, border-color 0.2s;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
         }
-
         .card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
         }
 
-        .card h3 { margin-top: 0; color: #fff; }
-        .badge {
+        .tag {
+            font-size: 0.7rem;
+            background: rgba(0, 242, 255, 0.1);
+            color: var(--accent-color);
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
             display: inline-block;
-            background: #238636;
-            color: #fff;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            margin-bottom: 1rem;
         }
-        .badge.blue { background: #1f6feb; }
-        .badge.purple { background: #8957e5; }
 
-        .btn {
-            display: inline-block;
+        .card h3 { margin: 0.5rem 0; font-size: 1.2rem; }
+        .card p { color: var(--text-secondary); font-size: 0.9rem; flex-grow: 1; }
+        
+        .btn-link {
             margin-top: 1rem;
-            color: var(--accent);
+            font-size: 0.85rem;
+            color: var(--accent-color);
             text-decoration: none;
-            font-weight: bold;
+            display: flex;
+            align-items: center;
         }
+        .btn-link::after { content: " >"; transition: margin 0.2s; }
+        .btn-link:hover::after { margin-left: 5px; }
 
-        .btn:hover { text-decoration: underline; }
+        footer { text-align: center; margin-top: 5rem; padding-bottom: 2rem; color: var(--text-secondary); font-size: 0.8rem; }
 
-        footer { text-align: center; padding: 4rem; color: var(--secondary); font-size: 0.9rem; }
+        /* Responsive */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>Enreque Coleman</h1>
-    <p class="tagline">Cloud Infrastructure Student | Digital Forensics Enthusiast | Automator</p>
-    <div>
-        <a href="https://github.com/Pr4yy" style="color: var(--accent); margin: 0 10px;">GitHub</a>
-        <a href="#" style="color: var(--accent); margin: 0 10px;">LinkedIn</a>
-    </div>
-</header>
-
 <div class="container">
-    
-    <section id="about">
-        <h2>About Me</h2>
-        <p>Currently pursuing a Post-Graduate certificate in <strong>Cloud Infrastructure and Administration at Lambton College</strong>. My focus lies at the intersection of secure cloud architecture and digital forensics. I specialize in mobile data extraction, Python automation, and solving complex networking puzzles through CTFs.</p>
-    </section>
+    <header>
+        <div class="status-bar">[ SYSTEM STATUS: SECURE ] [ USER: E_COLEMAN ]</div>
+        <h1>Enreque Coleman</h1>
+        <p style="color: var(--text-secondary);">Specializing in Cloud Infrastructure & Digital Forensic Investigation</p>
+        <nav>
+            <a href="https://github.com/Pr4yy">GITHUB</a>
+            <a href="#">LINKEDIN</a>
+            <a href="mailto:your-email@example.com">CONTACT</a>
+        </nav>
+    </header>
 
-    <section id="ctfs">
-        <h2>CTF Writeups & Networking</h2>
+    <section>
+        <h2>Digital Forensics (DFIR)</h2>
         <div class="grid">
             <div class="card">
-                <span class="badge">Networking</span>
-                <h3>HTB: Networking Challenge</h3>
-                <p>A deep dive into packet analysis and identifying lateral movement within a compromised subnet.</p>
-                <a href="#" class="btn">Read Writeup →</a>
+                <span class="tag">Mobile Forensics</span>
+                <h3>Cellebrite Extraction Workflow</h3>
+                <p>Analyzing physical and logical extractions for mobile devices. Focus on data integrity and chain of custody documentation.</p>
+                <a href="#" class="btn-link">Writeup Pending</a>
             </div>
             <div class="card">
-                <span class="badge">Security</span>
-                <h3>PicoCTF: Cryptography</h3>
-                <p>Breaking down RSA vulnerabilities and frequency analysis techniques used in recent competitions.</p>
-                <a href="#" class="btn">Read Writeup →</a>
+                <span class="tag">Artifact Analysis</span>
+                <h3>Windows Registry Forensics</h3>
+                <p>Investigation into user activity and persistence mechanisms through registry hive analysis.</p>
+                <a href="#" class="btn-link">Project Details</a>
             </div>
         </div>
     </section>
 
-    <section id="projects">
-        <h2>Featured Projects</h2>
+    <section>
+        <h2>CTF & Networking Lab</h2>
         <div class="grid">
             <div class="card">
-                <span class="badge blue">Cloud</span>
-                <h3>Sonic Sounds Infrastructure</h3>
-                <p>Architected a cloud-based service delivery model to resolve performance bottlenecks in a simulated environment.</p>
-                <a href="#" class="btn">View Project →</a>
+                <span class="tag" style="color: var(--warning); border: 1px solid var(--warning);">Active Challenge</span>
+                <h3>HackTheBox: [Machine Name]</h3>
+                <p>Current progress in exploiting vulnerable services and performing privilege escalation. Writeup coming soon.</p>
+                <a href="#" class="btn-link">View Progress</a>
             </div>
             <div class="card">
-                <span class="badge blue">Development</span>
+                <span class="tag">Networking</span>
+                <h3>Wireshark Packet Analysis</h3>
+                <p>Detailed breakdown of a simulated DDoS attack and identifying the source IP through traffic filtering.</p>
+                <a href="#" class="btn-link">Read Writeup</a>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Cloud & Infrastructure</h2>
+        <div class="grid">
+            <div class="card">
+                <span class="tag">Cloud Admin</span>
+                <h3>Sonic Sounds Architecture</h3>
+                <p>Optimizing cloud infrastructure for high availability and secure service delivery in enterprise environments.</p>
+                <a href="#" class="btn-link">Case Study</a>
+            </div>
+            <div class="card">
+                <span class="tag">Automation</span>
+                <h3>Security Scripting (Python)</h3>
+                <p>Developing automated auditing scripts using Python to monitor system logs and file integrity.</p>
+                <a href="#" class="btn-link">View Code</a>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Software Development</h2>
+        <div class="grid">
+            <div class="card">
+                <span class="tag">Dream Maker (DM)</span>
                 <h3>BYOND: Wizarding World RPG</h3>
-                <p>Developing an automated role-playing engine featuring custom sprite handling and game logic scripting.</p>
-                <a href="#" class="btn">View Source →</a>
+                <p>A custom role-playing engine focusing on automated sprite handling and multi-user game logic.</p>
+                <a href="#" class="btn-link">Source Code</a>
+            </div>
+            <div class="card">
+                <span class="tag">Automation</span>
+                <h3>AHK Utility Scripts</h3>
+                <p>Custom AutoHotkey scripts designed for workflow optimization and repetitive task automation.</p>
+                <a href="#" class="btn-link">View Gist</a>
             </div>
         </div>
     </section>
 
-    <section id="blog">
-        <h2>Digital Forensics Blog</h2>
-        <div class="grid">
-            <div class="card">
-                <span class="badge purple">Forensics</span>
-                <h3>The Future of Mobile Extraction</h3>
-                <p>Ongoing thoughts on Cellebrite workflows and the legal challenges of encrypted data recovery in 2026.</p>
-                <a href="#" class="btn">Read Post →</a>
-            </div>
-            <div class="card">
-                <span class="badge purple">Security</span>
-                <h3>Automation in SecOps</h3>
-                <p>How I use Python and AHK to streamline repetitive auditing tasks in IT administration.</p>
-                <a href="#" class="btn">Read Post →</a>
-            </div>
-        </div>
-    </section>
-
+    <footer>
+        <p>// 2026 Portfolio Deployment // Established at Lambton College</p>
+    </footer>
 </div>
-
-<footer>
-    <p>&copy; 2026 Enreque Coleman | Built with HTML/CSS</p>
-</footer>
 
 </body>
 </html>
