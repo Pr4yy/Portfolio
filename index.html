@@ -1,1 +1,169 @@
-test
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enreque Coleman | Cybersecurity & Cloud Portfolio</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --card-bg: #161b22;
+            --text: #c9d1d9;
+            --accent: #58a6ff;
+            --secondary: #8b949e;
+            --border: #30363d;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            padding: 4rem 2rem;
+            text-align: center;
+            background: linear-gradient(180deg, #161b22 0%, #0d1117 100%);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        h1 { color: #fff; margin-bottom: 0.5rem; font-size: 2.5rem; }
+        h2 { color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; margin-top: 3rem; }
+        
+        .tagline { font-size: 1.2rem; color: var(--secondary); margin-bottom: 2rem; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .card h3 { margin-top: 0; color: #fff; }
+        .badge {
+            display: inline-block;
+            background: #238636;
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .badge.blue { background: #1f6feb; }
+        .badge.purple { background: #8957e5; }
+
+        .btn {
+            display: inline-block;
+            margin-top: 1rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .btn:hover { text-decoration: underline; }
+
+        footer { text-align: center; padding: 4rem; color: var(--secondary); font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Enreque Coleman</h1>
+    <p class="tagline">Cloud Infrastructure Student | Digital Forensics Enthusiast | Automator</p>
+    <div>
+        <a href="https://github.com/Pr4yy" style="color: var(--accent); margin: 0 10px;">GitHub</a>
+        <a href="#" style="color: var(--accent); margin: 0 10px;">LinkedIn</a>
+    </div>
+</header>
+
+<div class="container">
+    
+    <section id="about">
+        <h2>About Me</h2>
+        <p>Currently pursuing a Post-Graduate certificate in <strong>Cloud Infrastructure and Administration at Lambton College</strong>. My focus lies at the intersection of secure cloud architecture and digital forensics. I specialize in mobile data extraction, Python automation, and solving complex networking puzzles through CTFs.</p>
+    </section>
+
+    <section id="ctfs">
+        <h2>CTF Writeups & Networking</h2>
+        <div class="grid">
+            <div class="card">
+                <span class="badge">Networking</span>
+                <h3>HTB: Networking Challenge</h3>
+                <p>A deep dive into packet analysis and identifying lateral movement within a compromised subnet.</p>
+                <a href="#" class="btn">Read Writeup →</a>
+            </div>
+            <div class="card">
+                <span class="badge">Security</span>
+                <h3>PicoCTF: Cryptography</h3>
+                <p>Breaking down RSA vulnerabilities and frequency analysis techniques used in recent competitions.</p>
+                <a href="#" class="btn">Read Writeup →</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2>Featured Projects</h2>
+        <div class="grid">
+            <div class="card">
+                <span class="badge blue">Cloud</span>
+                <h3>Sonic Sounds Infrastructure</h3>
+                <p>Architected a cloud-based service delivery model to resolve performance bottlenecks in a simulated environment.</p>
+                <a href="#" class="btn">View Project →</a>
+            </div>
+            <div class="card">
+                <span class="badge blue">Development</span>
+                <h3>BYOND: Wizarding World RPG</h3>
+                <p>Developing an automated role-playing engine featuring custom sprite handling and game logic scripting.</p>
+                <a href="#" class="btn">View Source →</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="blog">
+        <h2>Digital Forensics Blog</h2>
+        <div class="grid">
+            <div class="card">
+                <span class="badge purple">Forensics</span>
+                <h3>The Future of Mobile Extraction</h3>
+                <p>Ongoing thoughts on Cellebrite workflows and the legal challenges of encrypted data recovery in 2026.</p>
+                <a href="#" class="btn">Read Post →</a>
+            </div>
+            <div class="card">
+                <span class="badge purple">Security</span>
+                <h3>Automation in SecOps</h3>
+                <p>How I use Python and AHK to streamline repetitive auditing tasks in IT administration.</p>
+                <a href="#" class="btn">Read Post →</a>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<footer>
+    <p>&copy; 2026 Enreque Coleman | Built with HTML/CSS</p>
+</footer>
+
+</body>
+</html>
