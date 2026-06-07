@@ -1,169 +1,347 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pr4y — SEC_OPS Console</title>
+    
+    <!-- Fonts & Layout Engine -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+
+    <style>
+        /* ============================================================
+           SOC CONSOLE CUSTOM DESIGN SYSTEM
+           ============================================================ */
+        :root {
+            --soc-bg:     #0d1117;
+            --soc-bg-1:   #161b22;
+            --soc-bg-2:   #1c2433;
+            --soc-line:   #253040;
+            --soc-line2:  #374d6c;
+            --soc-ink:    #eef3ff;
+            --soc-ink2:   #c4ceea;
+            --soc-ink3:   #8a9bbf;
+            --soc-ink4:   #5e718a;
+            --soc-cy:     #22e1ff;
+            --soc-am:     #ffb547;
+            --soc-gn:     #3ddc84;
+            --soc-rd:     #ff5577;
+        }
+
+        html[data-theme="light"] {
+            --soc-bg:     #f8fafc;
+            --soc-bg-1:   #ffffff;
+            --soc-bg-2:   #f1f5f9;
+            --soc-line:   #cbd5e1;
+            --soc-line2:  #94a3b8;
+            --soc-ink:    #0f172a;
+            --soc-ink2:   #334155;
+            --soc-ink3:   #475569;
+            --soc-ink4:   #64748b;
+            --soc-cy:     #0284c7;
+            --soc-am:     #d97706;
+            --soc-gn:     #16a34a;
+            --soc-rd:     #dc2626;
+        }
+
+        body {
+            background-color: var(--soc-bg);
+            color: var(--soc-ink2);
+            font-family: 'JetBrains Mono', monospace !important;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        /* Tactical Hex Grid Background Overlay */
+        .hex-grid-overlay {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.25;
+            background-image:
+                linear-gradient(60deg, transparent 49.5%, rgba(34,225,255,.05) 50%, transparent 50.5%),
+                linear-gradient(-60deg, transparent 49.5%, rgba(34,225,255,.05) 50%, transparent 50.5%);
+            background-size: 36px 62px;
+        }
+
+        html[data-theme="light"] .hex-grid-overlay {
+            opacity: 0.08;
+            background-image:
+                linear-gradient(60deg, transparent 49.5%, rgba(2,132,199,.15) 50%, transparent 50.5%),
+                linear-gradient(-60deg, transparent 49.5%, rgba(2,132,199,.15) 50%, transparent 50.5%);
+        }
+
+        /* Custom components built from chicken's spec sheets */
+        .soc-header-terminal {
+            background-color: var(--soc-bg-1);
+            border-bottom: 1px solid var(--soc-line);
+        }
+
+        .soc-card {
+            background-color: var(--soc-bg-1);
+            border: 1px solid var(--soc-line);
+        }
+
+        .soc-card:hover {
+            border-color: var(--soc-line2);
+        }
+
+        /* Pulse live node animation */
+        .soc-live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--soc-gn);
+            box-shadow: 0 0 8px var(--soc-gn);
+            animation: pulse-glow 1.8s infinite ease-in-out;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.15); }
+        }
+
+        /* Custom scrollbar matching terminal rules */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--soc-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--soc-line2); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--soc-cy); }
+    </style>
 </head>
-<body class="bg-[#0b0f14] text-[#cbd5e1] font-sans antialiased">
+<body class="min-h-screen relative overflow-x-hidden pb-24">
 
-    <!-- Root App Target -->
-    <div id="root"></div>
+    <!-- Hex Overlay Engine -->
+    <div class="hex-grid-overlay"></div>
 
-    <!-- React App Initialization & Logic -->
-    <script type="text/babel">
-        // Sample Portfolio Data - Replace this array with your actual projects and findings
-        const initialProjects = [
+    <!-- MAIN CONSOLE INTERFACE TOP BANNER -->
+    <header class="soc-header-terminal sticky top-0 z-50 px-6 py-4 backdrop-blur-md bg-opacity-95">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            
+            <!-- Left Side Status Metadata -->
+            <div class="flex items-center gap-4">
+                <div class="soc-live-dot"></div>
+                <div>
+                    <h1 class="text-base font-bold tracking-wider uppercase" style="color: var(--soc-cy);">PR4Y // OPERATIONS_LOG</h1>
+                    <p class="text-xs font-medium opacity-60 mt-0.5">ROLE: CYBER SECURITY & OSINT SPECIALIST // SYS_STATUS: OPERATIONAL</p>
+                </div>
+            </div>
+
+            <!-- Right Controls: Light Switch & Navigation Filter Deck -->
+            <div class="flex items-center flex-wrap gap-3">
+                
+                <!-- Category Filter Engine Buttons -->
+                <div class="flex gap-1 bg-[#000]/10 p-1 border rounded" style="border-color: var(--soc-line);">
+                    <button onclick="filterLogs('ALL')" id="btn-ALL" class="filter-btn px-3 py-1 text-xs font-semibold uppercase transition-all" style="color: var(--soc-cy);">[ALL]</button>
+                    <button onclick="filterLogs('CTF')" id="btn-CTF" class="filter-btn px-3 py-1 text-xs font-semibold uppercase transition-all opacity-40">[CTFs]</button>
+                    <button onclick="filterLogs('OSINT')" id="btn-OSINT" class="filter-btn px-3 py-1 text-xs font-semibold uppercase transition-all opacity-40">[OSINT]</button>
+                    <button onclick="filterLogs('LABS')" id="btn-LABS" class="filter-btn px-3 py-1 text-xs font-semibold uppercase transition-all opacity-40">[LABS]</button>
+                    <button onclick="filterLogs('RESEARCH')" id="btn-RESEARCH" class="filter-btn px-3 py-1 text-xs font-semibold uppercase transition-all opacity-40">[RESEARCH]</button>
+                </div>
+
+                <!-- Theme Toggle Button -->
+                <button onclick="toggleTheme()" class="px-3 py-1.5 text-xs font-bold border rounded uppercase hover:opacity-80 transition-all" style="border-color: var(--soc-line); background-color: var(--soc-bg-2);">
+                    🌗 <span id="theme-text">LIGHT_MODE</span>
+                </button>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- CORE WORKSPACE GRID CONTAINER -->
+    <main class="max-w-7xl mx-auto px-6 mt-10 grid grid-cols-1 lg:grid-cols-4 gap-8 relative z-10">
+        
+        <!-- SIDEBAR PANEL: IDENTITY & PARAMETERS -->
+        <aside class="lg:col-span-1 space-y-6">
+            <div class="soc-card p-5 rounded-sm">
+                <h2 class="text-xs font-bold tracking-widest uppercase mb-4" style="color: var(--soc-ink4);">// INTEL_METADATA</h2>
+                <div class="space-y-4 text-xs">
+                    <div>
+                        <span style="color: var(--soc-ink4);">SPECIFICATION:</span>
+                        <p class="font-semibold mt-0.5" style="color: var(--soc-ink);">Digital Forensics, Cloud Sec, Incident Response</p>
+                    </div>
+                    <div>
+                        <span style="color: var(--soc-ink4);">AFFILIATIONS:</span>
+                        <p class="font-semibold mt-0.5" style="color: var(--soc-ink);">Trace Labs Volunteer Investigator</p>
+                    </div>
+                    <div class="pt-3 border-t" style="border-color: var(--soc-line);">
+                        <span style="color: var(--soc-ink4);">COMMAND_NETWORKS:</span>
+                        <div class="flex gap-4 mt-2 text-sm" style="color: var(--soc-cy);">
+                            <a href="https://github.com" target="_blank" class="hover:underline">GITHUB</a>
+                            <a href="https://linkedin.com" target="_blank" class="hover:underline">LINKEDIN</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN WINDOW: DYNAMIC LOG DISPATCH MATRIX -->
+        <section class="lg:col-span-3 space-y-4">
+            <div class="flex justify-between items-center border-b pb-2" style="border-color: var(--soc-line);">
+                <h2 class="text-xs font-bold tracking-widest uppercase" style="color: var(--soc-ink4);">// DISPATCHED_CASE_LOGS</h2>
+                <span class="text-xs font-semibold" style="color: var(--soc-cy);" id="case-counter">TOTAL: 0</span>
+            </div>
+
+            <!-- Target container injection pipeline for cases -->
+            <div id="logs-container" class="space-y-4">
+                <!-- Case database records will auto-populate here seamlessly via javascript engine below -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ============================================================
+       INJECTION DATABASE — ADD YOUR WRITEUPS & CASES BELOW HERE
+       ============================================================ -->
+    <script>
+        /**
+         * HOW TO ADD NEW ENTRIES:
+         * Simply copy an entire object block {} below and paste it directly into the array.
+         * 
+         * category: Set to 'CTF', 'OSINT', 'LABS', or 'RESEARCH' (Triggers navbar filtering)
+         * severity: Set to 'high' (Red), 'medium' (Amber), or 'low' (Cyan) for triage coloring
+         */
+        const CaseDatabase = [
             {
-                id: "case-001",
-                title: "Trace Labs Global OSINT Search Party",
+                id: "CASE-001",
+                title: "Trace Labs Missing Persons Investigation Deployment",
                 category: "OSINT",
                 severity: "high",
-                date: "2026-05",
-                summary: "Conducted missing persons investigations using advanced open-source intelligence methodologies, pivoting through social media footprints, domain records, and metadata analytics.",
-                tags: ["Trace Labs", "OPSEC", "Sockpuppets", "Pivot Analysis"]
+                date: "2026-06",
+                summary: "Conducted crowdsourced open-source intelligence gathering to generate actionable leads for law enforcement. Formulated tactical search parameters to map target communications, unearth archived social footprint layers, and conduct open imagery geolocation.",
+                tags: ["Trace Labs", "OPSEC", "Passive Reconnaissance", "Footprinting"],
+                link: "#"
             },
             {
-                id: "ctf-024",
-                title: "Windows Event Log Forensics & Timeline Reconstruction",
-                category: "DFIR",
+                id: "CTF-082",
+                title: "CyberDefenders: Memory Forensics Artifact Analysis Lab",
+                category: "CTF",
                 severity: "medium",
-                date: "2026-04",
-                summary: "Analyzed EVTX artifacts to trace a lateral movement event. Reconstructed the attacker timeline by isolating Event IDs 4624 (Successful Logon) and 4625 (Failed Logon).",
-                tags: ["Blue Team", "Event Logs", "Incident Response"]
+                date: "2026-05",
+                summary: "Evaluated a live host memory extraction file following an enterprise endpoint incident. Utilized Volatility structures to identify anomalous injections, map execution pathways, and carve malicious payloads.",
+                tags: ["Volatility", "Memory Carving", "Incident Response", "DFIR"],
+                link: "#"
             },
             {
-                id: "inf-009",
-                title: "Automated AWS IAM Rule Auditor",
-                category: "Cloud",
+                id: "LAB-014",
+                title: "Cloud Infrastructure Threat Detection Pipeline",
+                category: "LABS",
+                severity: "low",
+                date: "2026-04",
+                summary: "Architected a log ingest processing system within a virtual network. Configured continuous log stream capture, automated mapping of identity verification actions, and generated dashboard alerting matrices for pattern shifts.",
+                tags: ["Cloud Security", "Log Parsing", "SIEM", "Automation"],
+                link: "#"
+            },
+            {
+                id: "RES-002",
+                title: "Automated Analysis Pipelines for Enterprise Audit Logs",
+                category: "RESEARCH",
                 severity: "low",
                 date: "2026-03",
-                summary: "Developed a Python-driven automation script utilizing Boto3 to audit IAM policies against security baselines, flagging over-privileged service roles.",
-                tags: ["Python", "AWS", "IAM", "Boto3"]
+                summary: "Research evaluation exploring optimization models for standard text log normalization workflows. Created custom script layouts converting messy server configurations into high-performance structural data models.",
+                tags: ["Python", "Data Structure", "Security Engineering"],
+                link: "#"
             }
         ];
 
-        function SocPortfolio() {
-            const [projects, setProjects] = React.useState(initialProjects);
-            const [filter, setFilter] = React.useState("ALL");
+        // ============================================================
+        // CORE CONSOLE LOGIC ENGINE - DO NOT MODIFY ABOVE DATA
+        // ============================================================
+        let activeCategory = "ALL";
 
-            const filteredProjects = filter === "ALL" 
-                ? projects 
-                : projects.filter(p => p.category === filter);
+        function renderLogs() {
+            const container = document.getElementById("logs-container");
+            container.innerHTML = "";
+            
+            const filtered = activeCategory === "ALL" 
+                ? CaseDatabase 
+                : CaseDatabase.filter(item => item.category === activeCategory);
 
-            // Severity color helper mapping to the custom CSS variables
-            const getSevClass = (sev) => {
-                if (sev === "high") return "border-l-4 border-[#ff4d4d] bg-[#ff4d4d]/5";
-                if (sev === "medium") return "border-l-4 border-[#ffb900] bg-[#ffb900]/5";
-                return "border-l-4 border-[#22e1ff] bg-[#22e1ff]/5";
-            };
+            document.getElementById("case-counter").innerText = `TOTAL_RECORDS: ${filtered.length}`;
 
-            return (
-                <div class="min-h-screen relative overflow-hidden pb-12">
-                    {/* Hex Grid Overlay Element */}
-                    <div class="absolute inset-0 opacity-15 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(34,225,255,0.1)_0%,transparent_70%)]"></div>
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="border border-dashed p-12 text-center text-xs tracking-widest uppercase opacity-40" style="border-color: var(--soc-line);">
+                        NO COMPLETED RECORD LOGFILES IN THIS SECTION MATRIX
+                    </div>`;
+                return;
+            }
 
-                    {/* Top Terminal Status Header */}
-                    <header class="border-b border-[#1e293b] bg-[#0f172a]/80 backdrop-blur sticky top-0 z-50 px-6 py-4">
-                        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                            <div>
-                                <div class="flex items-center gap-3">
-                                    <span class="w-2.5 h-2.5 rounded-full bg-[#10b981] animate-pulse"></span>
-                                    <h1 class="text-xl font-mono font-bold tracking-wide text-[#22e1ff]">SEC_OPS // MAIN_CONSOLE</h1>
-                                </div>
-                                <p class="text-xs font-mono text-[#64748b] mt-1">OPERATOR: ENREQUE COLEMAN | LOCATION: COR-CAN-01</p>
+            filtered.forEach(item => {
+                // Handle threat matrix coloring dynamically
+                let borderStyle = "border-left: 4px solid var(--soc-cy);";
+                if (item.severity === "high") borderStyle = "border-left: 4px solid var(--soc-rd);";
+                if (item.severity === "medium") borderStyle = "border-left: 4px solid var(--soc-am);";
+
+                const tagTemplate = item.tags.map(tag => `
+                    <span class="text-[10px] px-2 py-0.5 border rounded-sm tracking-wide opacity-70" style="border-color: var(--soc-line); background-color: var(--soc-bg-2);">
+                        #${tag}
+                    </span>
+                `).join('');
+
+                const itemHTML = `
+                    <article class="soc-card p-5 rounded-sm transition-all relative overflow-hidden" style="${borderStyle}">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                            <div class="flex items-center flex-wrap gap-2.5">
+                                <span class="text-[10px] px-1.5 py-0.5 font-bold tracking-wider uppercase border rounded-sm" style="color: var(--soc-cy); border-color: rgba(34,225,255,0.25); background: rgba(34,225,255,0.02);">
+                                    ${item.id}
+                                </span>
+                                <a href="${item.link}" class="text-sm font-bold tracking-tight hover:underline" style="color: var(--soc-ink);">
+                                    ${item.title}
+                                </a>
                             </div>
-                            
-                            {/* Filter Deck */}
-                            <div class="flex flex-wrap gap-2 font-mono text-xs">
-                                {["ALL", "OSINT", "DFIR", "Cloud"].map(cat => (
-                                    <button 
-                                        key={cat}
-                                        onClick={() => setFilter(cat)}
-                                        class={`px-3 py-1.5 border transition-all ${
-                                            filter === cat 
-                                                ? "bg-[#22e1ff]/10 border-[#22e1ff] text-[#22e1ff] shadow-[0_0_10px_rgba(34,225,255,0.2)]" 
-                                                : "border-[#1e293b] text-[#64748b] hover:border-[#475569] hover:text-[#cbd5e1]"
-                                        }`}
-                                    >
-                                        [{cat}]
-                                    </button>
-                                ))}
+                            <div class="flex gap-4 items-center text-[11px] font-medium opacity-50">
+                                <span>[${item.category}]</span>
+                                <span>${item.date}</span>
                             </div>
                         </div>
-                    </header>
-
-                    {/* Console Main Workspace */}
-                    <main class="max-w-7xl mx-auto px-6 mt-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
-                        
-                        {/* Left Column: Operator Profile & Metrics */}
-                        <section class="lg:col-span-1 space-y-6">
-                            <div class="border border-[#1e293b] bg-[#0f172a]/40 p-5 rounded-sm">
-                                <h2 class="text-xs font-mono font-semibold tracking-wider text-[#64748b] uppercase mb-4">// INTEL_PROFILE</h2>
-                                <div class="space-y-3 font-mono text-xs">
-                                    <div>
-                                        <div class="text-[#64748b]">SPECIALIZATION:</div>
-                                        <div class="text-[#cbd5e1]">Digital Forensics / SOC / Cloud Security</div>
-                                    </div>
-                                    <div>
-                                        <div class="text-[#64748b]">STATUS:</div>
-                                        <div class="text-[#10b981]">ACTIVE // TRIAGING_CASES</div>
-                                    </div>
-                                    <div class="pt-2 border-t border-[#1e293b] flex gap-3 text-sm text-[#22e1ff]">
-                                        <a href="#" class="hover:underline">GitHub</a>
-                                        <a href="#" class="hover:underline">LinkedIn</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-
-                        {/* Right Column: Case Logs / Project Feed */}
-                        <section class="lg:col-span-3 space-y-4">
-                            <div class="flex items-center justify-between border-b border-[#1e293b] pb-2">
-                                <h2 class="text-sm font-mono font-bold text-[#64748b] uppercase">// DEPLOYED_CASE_LOGS ({filteredProjects.length})</h2>
-                                <span class="text-xs font-mono text-[#22e1ff]">SYSTEM_OK</span>
-                            </div>
-
-                            {filteredProjects.length === 0 ? (
-                                <div class="border border-dashed border-[#1e293b] p-12 text-center text-sm font-mono text-[#64748b]">
-                                    NO RECORDED ARTIFACTS MATCHING THE SELECTION FILTER
-                                </div>
-                            ) : (
-                                filteredProjects.map(project => (
-                                    <article 
-                                        key={project.id}
-                                        class={`border border-[#1e293b] bg-[#0f172a]/20 p-5 transition-all hover:border-[#334155] ${getSevClass(project.severity)}`}
-                                    >
-                                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
-                                            <div class="flex items-center gap-3">
-                                                <span class="font-mono text-xs text-[#22e1ff] px-2 py-0.5 bg-[#22e1ff]/5 border border-[#22e1ff]/20">
-                                                    {project.id}
-                                                </span>
-                                                <h3 class="text-base font-semibold text-[#f1f5f9] tracking-tight hover:text-[#22e1ff] cursor-pointer">
-                                                    {project.title}
-                                                </h3>
-                                            </div>
-                                            <div class="flex items-center gap-4 font-mono text-xs text-[#64748b]">
-                                                <span>[{project.category}]</span>
-                                                <span>{project.date}</span>
-                                            </div>
-                                        </div>
-
-                                        <p class="text-sm text-[#94a3b8] leading-relaxed mb-4">
-                                            {project.summary}
-                                        </p>
-
-                                        <div class="flex flex-wrap gap-2">
-                                            {project.tags.map(tag => (
-                                                <span key={tag} class="font-mono text-[11px] px-2 py-0.5 bg-[#1e293b] text-[#94a3b8] border border-[#334155]/30">
-                                                    #{tag}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    </article>
-                                ))
-                            )}
-                        </section>
-                    </main>
-                </div>
-            );
+                        <p class="text-xs leading-relaxed mb-4" style="color: var(--soc-ink2); opacity: 0.85;">
+                            ${item.summary}
+                        </p>
+                        <div class="flex flex-wrap gap-1.5">
+                            ${tagTemplate}
+                        </div>
+                    </article>
+                `;
+                container.innerHTML += itemHTML;
+            });
         }
 
-        ReactDOM.render(<SocPortfolio />, document.getElementById('root'));
+        function filterLogs(category) {
+            activeCategory = category;
+            
+            // Adjust visual opacity filters across UI dashboard buttons
+            document.querySelectorAll(".filter-btn").forEach(btn => {
+                btn.classList.add("opacity-40");
+                btn.style.color = "var(--soc-ink3)";
+            });
+            
+            const activeBtn = document.getElementById(`btn-${category}`);
+            activeBtn.classList.remove("opacity-40");
+            activeBtn.style.color = "var(--soc-cy)";
+
+            renderLogs();
+        }
+
+        function toggleTheme() {
+            const htmlNode = document.documentElement;
+            const textNode = document.getElementById("theme-text");
+            
+            if (htmlNode.getAttribute("data-theme") === "dark") {
+                htmlNode.setAttribute("data-theme", "light");
+                textNode.innerText = "DARK_MODE";
+            } else {
+                htmlNode.setAttribute("data-theme", "dark");
+                textNode.innerText = "LIGHT_MODE";
+            }
+        }
+
+        // Initialize display console on payload verification boot
+        document.addEventListener("DOMContentLoaded", () => {
+            renderLogs();
+        });
     </script>
 </body>
 </html>
