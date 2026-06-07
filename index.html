@@ -1,212 +1,169 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enreque Coleman | DFIR & Cyber Security Portfolio</title>
-    <style>
-        :root {
-            --bg-color: #05070a;
-            --surface-color: #0f172a;
-            --accent-color: #00f2ff; /* Cyber Blue */
-            --text-primary: #e2e8f0;
-            --text-secondary: #94a3b8;
-            --border-color: #1e293b;
-            --success: #10b981;
-            --warning: #f59e0b;
-        }
-
-        * { box-sizing: border-box; }
-        body {
-            font-family: 'Fira Code', 'Courier New', monospace;
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            line-height: 1.6;
-            margin: 0;
-        }
-
-        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
-
-        /* Header / Terminal Style */
-        header {
-            border: 1px solid var(--border-color);
-            background: var(--surface-color);
-            padding: 2rem;
-            border-radius: 8px;
-            margin-bottom: 3rem;
-            position: relative;
-            overflow: hidden;
-        }
-        header::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; height: 4px;
-            background: linear-gradient(90deg, var(--accent-color), #7000ff);
-        }
-
-        h1 { font-size: 2.5rem; margin: 0; color: var(--accent-color); }
-        .status-bar { font-size: 0.8rem; color: var(--success); margin-bottom: 1rem; }
-        
-        /* Navigation */
-        nav { margin-top: 1rem; }
-        nav a { color: var(--text-secondary); text-decoration: none; margin-right: 1.5rem; font-size: 0.9rem; }
-        nav a:hover { color: var(--accent-color); }
-
-        /* Grid Layout */
-        h2 { 
-            font-size: 1.5rem; 
-            border-left: 4px solid var(--accent-color); 
-            padding-left: 15px; 
-            margin: 3rem 0 1.5rem; 
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        /* Card Component */
-        .card {
-            background: var(--surface-color);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            transition: all 0.3s ease;
-        }
-        .card:hover {
-            border-color: var(--accent-color);
-            transform: translateY(-2px);
-            box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
-        }
-
-        .tag {
-            font-size: 0.7rem;
-            background: rgba(0, 242, 255, 0.1);
-            color: var(--accent-color);
-            padding: 3px 8px;
-            border-radius: 4px;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            display: inline-block;
-        }
-
-        .card h3 { margin: 0.5rem 0; font-size: 1.2rem; }
-        .card p { color: var(--text-secondary); font-size: 0.9rem; flex-grow: 1; }
-        
-        .btn-link {
-            margin-top: 1rem;
-            font-size: 0.85rem;
-            color: var(--accent-color);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-        }
-        .btn-link::after { content: " >"; transition: margin 0.2s; }
-        .btn-link:hover::after { margin-left: 5px; }
-
-        footer { text-align: center; margin-top: 5rem; padding-bottom: 2rem; color: var(--text-secondary); font-size: 0.8rem; }
-
-        /* Responsive */
-        @media (max-width: 600px) {
-            h1 { font-size: 1.8rem; }
-        }
-    </style>
 </head>
-<body>
+<body class="bg-[#0b0f14] text-[#cbd5e1] font-sans antialiased">
 
-<div class="container">
-    <header>
-        <div class="status-bar">[ SYSTEM STATUS: SECURE ] [ USER: E_COLEMAN ]</div>
-        <h1>Enreque Coleman</h1>
-        <p style="color: var(--text-secondary);">Specializing in Cloud Infrastructure & Digital Forensic Investigation</p>
-        <nav>
-            <a href="https://github.com/Pr4yy">GITHUB</a>
-            <a href="#">LINKEDIN</a>
-            <a href="mailto:your-email@example.com">CONTACT</a>
-        </nav>
-    </header>
+    <!-- Root App Target -->
+    <div id="root"></div>
 
-    <section>
-        <h2>Digital Forensics (DFIR)</h2>
-        <div class="grid">
-            <div class="card">
-                <span class="tag">Mobile Forensics</span>
-                <h3>Cellebrite Extraction Workflow</h3>
-                <p>Analyzing physical and logical extractions for mobile devices. Focus on data integrity and chain of custody documentation.</p>
-                <a href="#" class="btn-link">Writeup Pending</a>
-            </div>
-            <div class="card">
-                <span class="tag">Artifact Analysis</span>
-                <h3>Windows Registry Forensics</h3>
-                <p>Investigation into user activity and persistence mechanisms through registry hive analysis.</p>
-                <a href="#" class="btn-link">Project Details</a>
-            </div>
-        </div>
-    </section>
+    <!-- React App Initialization & Logic -->
+    <script type="text/babel">
+        // Sample Portfolio Data - Replace this array with your actual projects and findings
+        const initialProjects = [
+            {
+                id: "case-001",
+                title: "Trace Labs Global OSINT Search Party",
+                category: "OSINT",
+                severity: "high",
+                date: "2026-05",
+                summary: "Conducted missing persons investigations using advanced open-source intelligence methodologies, pivoting through social media footprints, domain records, and metadata analytics.",
+                tags: ["Trace Labs", "OPSEC", "Sockpuppets", "Pivot Analysis"]
+            },
+            {
+                id: "ctf-024",
+                title: "Windows Event Log Forensics & Timeline Reconstruction",
+                category: "DFIR",
+                severity: "medium",
+                date: "2026-04",
+                summary: "Analyzed EVTX artifacts to trace a lateral movement event. Reconstructed the attacker timeline by isolating Event IDs 4624 (Successful Logon) and 4625 (Failed Logon).",
+                tags: ["Blue Team", "Event Logs", "Incident Response"]
+            },
+            {
+                id: "inf-009",
+                title: "Automated AWS IAM Rule Auditor",
+                category: "Cloud",
+                severity: "low",
+                date: "2026-03",
+                summary: "Developed a Python-driven automation script utilizing Boto3 to audit IAM policies against security baselines, flagging over-privileged service roles.",
+                tags: ["Python", "AWS", "IAM", "Boto3"]
+            }
+        ];
 
-    <section>
-        <h2>CTF & Networking Lab</h2>
-        <div class="grid">
-            <div class="card">
-                <span class="tag" style="color: var(--warning); border: 1px solid var(--warning);">Active Challenge</span>
-                <h3>HackTheBox: [Machine Name]</h3>
-                <p>Current progress in exploiting vulnerable services and performing privilege escalation. Writeup coming soon.</p>
-                <a href="#" class="btn-link">View Progress</a>
-            </div>
-            <div class="card">
-                <span class="tag">Networking</span>
-                <h3>Wireshark Packet Analysis</h3>
-                <p>Detailed breakdown of a simulated DDoS attack and identifying the source IP through traffic filtering.</p>
-                <a href="#" class="btn-link">Read Writeup</a>
-            </div>
-        </div>
-    </section>
+        function SocPortfolio() {
+            const [projects, setProjects] = React.useState(initialProjects);
+            const [filter, setFilter] = React.useState("ALL");
 
-    <section>
-        <h2>Cloud & Infrastructure</h2>
-        <div class="grid">
-            <div class="card">
-                <span class="tag">Cloud Admin</span>
-                <h3>Sonic Sounds Architecture</h3>
-                <p>Optimizing cloud infrastructure for high availability and secure service delivery in enterprise environments.</p>
-                <a href="#" class="btn-link">Case Study</a>
-            </div>
-            <div class="card">
-                <span class="tag">Automation</span>
-                <h3>Security Scripting (Python)</h3>
-                <p>Developing automated auditing scripts using Python to monitor system logs and file integrity.</p>
-                <a href="#" class="btn-link">View Code</a>
-            </div>
-        </div>
-    </section>
+            const filteredProjects = filter === "ALL" 
+                ? projects 
+                : projects.filter(p => p.category === filter);
 
-    <section>
-        <h2>Software Development</h2>
-        <div class="grid">
-            <div class="card">
-                <span class="tag">Dream Maker (DM)</span>
-                <h3>BYOND: Wizarding World RPG</h3>
-                <p>A custom role-playing engine focusing on automated sprite handling and multi-user game logic.</p>
-                <a href="#" class="btn-link">Source Code</a>
-            </div>
-            <div class="card">
-                <span class="tag">Automation</span>
-                <h3>AHK Utility Scripts</h3>
-                <p>Custom AutoHotkey scripts designed for workflow optimization and repetitive task automation.</p>
-                <a href="#" class="btn-link">View Gist</a>
-            </div>
-        </div>
-    </section>
+            // Severity color helper mapping to the custom CSS variables
+            const getSevClass = (sev) => {
+                if (sev === "high") return "border-l-4 border-[#ff4d4d] bg-[#ff4d4d]/5";
+                if (sev === "medium") return "border-l-4 border-[#ffb900] bg-[#ffb900]/5";
+                return "border-l-4 border-[#22e1ff] bg-[#22e1ff]/5";
+            };
 
-    <footer>
-        <p>// 2026 Portfolio Deployment // Established at Lambton College</p>
-    </footer>
-</div>
+            return (
+                <div class="min-h-screen relative overflow-hidden pb-12">
+                    {/* Hex Grid Overlay Element */}
+                    <div class="absolute inset-0 opacity-15 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(34,225,255,0.1)_0%,transparent_70%)]"></div>
 
+                    {/* Top Terminal Status Header */}
+                    <header class="border-b border-[#1e293b] bg-[#0f172a]/80 backdrop-blur sticky top-0 z-50 px-6 py-4">
+                        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                            <div>
+                                <div class="flex items-center gap-3">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-[#10b981] animate-pulse"></span>
+                                    <h1 class="text-xl font-mono font-bold tracking-wide text-[#22e1ff]">SEC_OPS // MAIN_CONSOLE</h1>
+                                </div>
+                                <p class="text-xs font-mono text-[#64748b] mt-1">OPERATOR: ENREQUE COLEMAN | LOCATION: COR-CAN-01</p>
+                            </div>
+                            
+                            {/* Filter Deck */}
+                            <div class="flex flex-wrap gap-2 font-mono text-xs">
+                                {["ALL", "OSINT", "DFIR", "Cloud"].map(cat => (
+                                    <button 
+                                        key={cat}
+                                        onClick={() => setFilter(cat)}
+                                        class={`px-3 py-1.5 border transition-all ${
+                                            filter === cat 
+                                                ? "bg-[#22e1ff]/10 border-[#22e1ff] text-[#22e1ff] shadow-[0_0_10px_rgba(34,225,255,0.2)]" 
+                                                : "border-[#1e293b] text-[#64748b] hover:border-[#475569] hover:text-[#cbd5e1]"
+                                        }`}
+                                    >
+                                        [{cat}]
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    </header>
+
+                    {/* Console Main Workspace */}
+                    <main class="max-w-7xl mx-auto px-6 mt-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
+                        
+                        {/* Left Column: Operator Profile & Metrics */}
+                        <section class="lg:col-span-1 space-y-6">
+                            <div class="border border-[#1e293b] bg-[#0f172a]/40 p-5 rounded-sm">
+                                <h2 class="text-xs font-mono font-semibold tracking-wider text-[#64748b] uppercase mb-4">// INTEL_PROFILE</h2>
+                                <div class="space-y-3 font-mono text-xs">
+                                    <div>
+                                        <div class="text-[#64748b]">SPECIALIZATION:</div>
+                                        <div class="text-[#cbd5e1]">Digital Forensics / SOC / Cloud Security</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-[#64748b]">STATUS:</div>
+                                        <div class="text-[#10b981]">ACTIVE // TRIAGING_CASES</div>
+                                    </div>
+                                    <div class="pt-2 border-t border-[#1e293b] flex gap-3 text-sm text-[#22e1ff]">
+                                        <a href="#" class="hover:underline">GitHub</a>
+                                        <a href="#" class="hover:underline">LinkedIn</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        {/* Right Column: Case Logs / Project Feed */}
+                        <section class="lg:col-span-3 space-y-4">
+                            <div class="flex items-center justify-between border-b border-[#1e293b] pb-2">
+                                <h2 class="text-sm font-mono font-bold text-[#64748b] uppercase">// DEPLOYED_CASE_LOGS ({filteredProjects.length})</h2>
+                                <span class="text-xs font-mono text-[#22e1ff]">SYSTEM_OK</span>
+                            </div>
+
+                            {filteredProjects.length === 0 ? (
+                                <div class="border border-dashed border-[#1e293b] p-12 text-center text-sm font-mono text-[#64748b]">
+                                    NO RECORDED ARTIFACTS MATCHING THE SELECTION FILTER
+                                </div>
+                            ) : (
+                                filteredProjects.map(project => (
+                                    <article 
+                                        key={project.id}
+                                        class={`border border-[#1e293b] bg-[#0f172a]/20 p-5 transition-all hover:border-[#334155] ${getSevClass(project.severity)}`}
+                                    >
+                                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                                            <div class="flex items-center gap-3">
+                                                <span class="font-mono text-xs text-[#22e1ff] px-2 py-0.5 bg-[#22e1ff]/5 border border-[#22e1ff]/20">
+                                                    {project.id}
+                                                </span>
+                                                <h3 class="text-base font-semibold text-[#f1f5f9] tracking-tight hover:text-[#22e1ff] cursor-pointer">
+                                                    {project.title}
+                                                </h3>
+                                            </div>
+                                            <div class="flex items-center gap-4 font-mono text-xs text-[#64748b]">
+                                                <span>[{project.category}]</span>
+                                                <span>{project.date}</span>
+                                            </div>
+                                        </div>
+
+                                        <p class="text-sm text-[#94a3b8] leading-relaxed mb-4">
+                                            {project.summary}
+                                        </p>
+
+                                        <div class="flex flex-wrap gap-2">
+                                            {project.tags.map(tag => (
+                                                <span key={tag} class="font-mono text-[11px] px-2 py-0.5 bg-[#1e293b] text-[#94a3b8] border border-[#334155]/30">
+                                                    #{tag}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </article>
+                                ))
+                            )}
+                        </section>
+                    </main>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<SocPortfolio />, document.getElementById('root'));
+    </script>
 </body>
 </html>
