@@ -131,6 +131,7 @@
 
     <main class="max-w-7xl mx-auto px-6 mt-6 relative z-10">
         
+        <!-- HOME VIEW LAYER -->
         <div id="view-home" class="space-y-6">
             
             <div class="panel-container p-6 rounded-md relative overflow-hidden">
@@ -178,6 +179,7 @@
                 </div>
             </div>
 
+            <!-- ANALYTICS counters PANEL -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div class="panel-container p-4 rounded-sm">
                     <span class="text-[10px] font-bold tracking-wider block uppercase" style="color: var(--soc-text-low);">● CTF WRITE-UPS</span>
@@ -221,15 +223,16 @@
                 </div>
             </div>
 
+            <!-- RECENT FEED BLOCK -->
             <div class="space-y-3">
                 <div class="flex justify-between items-center border-b pb-1" style="border-color: var(--soc-line);">
                     <h3 class="text-xs font-bold uppercase tracking-widest" style="color: var(--soc-text-low);">│ RECENT ACTIVITY FEED</h3>
                     <span class="text-[10px] font-mono tracking-tighter" style="color: var(--soc-text-low);">TAIL -F /VAR/LOG/PORTFOLIO.FEED</span>
                 </div>
-                <div class="space-y-2.5" id="recent-feed-target">
-                    </div>
+                <div class="space-y-2.5" id="recent-feed-target"></div>
             </div>
 
+            <!-- CREDENTIALS MATRICES -->
             <div class="space-y-3">
                 <h3 class="text-xs font-bold uppercase tracking-widest" style="color: var(--soc-text-low);">│ ISSUED CREDENTIALS & EDUCATION</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -257,6 +260,7 @@
                 </div>
             </div>
 
+            <!-- BIO PROFILE BRIEF -->
             <div class="panel-container p-5 rounded">
                 <div class="flex justify-between items-center border-b pb-2 mb-3" style="border-color: var(--soc-line);">
                     <h3 class="text-xs font-bold tracking-wider uppercase" style="color: var(--soc-text-hi);">// OPERATOR_BRIEF.md</h3>
@@ -267,10 +271,11 @@
                 </p>
             </div>
 
+            <!-- NETWORKS LINK MATRICES -->
             <div class="space-y-3">
                 <h3 class="text-xs font-bold uppercase tracking-widest" style="color: var(--soc-text-low);">│ ESTABLISHED NETWORKS</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <a href="https://github.com" target="_blank" class="card-container p-4 rounded flex justify-between items-center group transition-all">
+                    <a href="https://github.com/Pr4yy" target="_blank" class="card-container p-4 rounded flex justify-between items-center group transition-all">
                         <div class="flex items-center gap-3">
                             <span class="text-xs px-1.5 py-0.5 rounded font-mono font-bold bg-slate-800 text-slate-300">GH</span>
                             <div>
@@ -295,13 +300,13 @@
 
         </div>
 
+        <!-- DYNAMIC FILTER ROUTING TAB VIEW -->
         <div id="view-categorized" class="hidden space-y-4">
             <div class="flex justify-between items-center border-b pb-2" style="border-color: var(--soc-line);">
                 <h3 class="text-xs font-bold tracking-widest uppercase" id="category-view-title" style="color: var(--soc-text-low);">// MODULE_LOGS</h3>
                 <span class="text-xs font-mono font-bold" id="category-view-counter" style="color: var(--color-cy);">RECORDS: 0</span>
             </div>
-            <div id="category-logs-target" class="space-y-4">
-                </div>
+            <div id="category-logs-target" class="space-y-4"></div>
         </div>
 
     </main>
@@ -317,13 +322,24 @@
         </div>
     </footer>
 
+    <!-- ENGINE SYSTEM ROUTING SCRIPT -->
     <script>
         /**
-         * MASTER RECORDS ENGINE
+                  * MASTER DATA ENGINE CONFIGURATION MATRIX
          * Categories: 'CTF', 'OSINT', 'LABS', 'RESEARCH'
-         * Severity Level Color Rules: 'high' (Red Line), 'medium' (Amber Line), 'low' (Cyan Line)
+         * Severity Levels: 'high' (Red Highlight), 'medium' (Amber Highlight), 'low' (Cyan Highlight)
          */
         const SystemDatabase = [
+            {
+                id: "DFIR-024",
+                title: "BTLO - Curiosity Forensic Investigation Walkthrough",
+                category: "CTF",
+                severity: "high",
+                date: "2026-06",
+                summary: "Exposed an active data staging and insider threat exfiltration lifecycle by parsing raw MFT system metadata and $UsnJrnl:$J filesystem transaction stream artifacts via Eric Zimmerman's MFTECmd ecosystem.",
+                tags: ["NTFS Forensics", "$UsnJrnl", "Insider Threat", "MFTECmd"],
+                link: "writeups/curiosity.html"
+            },
             {
                 id: "CASE-001",
                 title: "Trace Labs Global OSINT Search Party Deployment",
@@ -367,14 +383,15 @@
         ];
 
         // ============================================================
-        // ROUTING ENGINE & LOGIC INTERACTIVE CODE
+        // CORE RENDER AND INTERACTIVE VIEW ROUTING ENGINE
         // ============================================================
         
         function populateRecentFeed() {
             const feedTarget = document.getElementById("recent-feed-target");
+            if (!feedTarget) return;
             feedTarget.innerHTML = "";
             
-            // Render the top 3 items onto home view feed board
+            // Extract and slice top 3 events for Home Dashboard Console feed display
             SystemDatabase.slice(0, 3).forEach(item => {
                 let badgeColor = "var(--color-cy)";
                 if(item.category === "OSINT") badgeColor = "var(--color-rd)";
@@ -388,7 +405,7 @@
                                 ${item.category}
                             </span>
                             <div class="truncate">
-                                <a href="${item.link}" class="font-semibold text-slate-200 hover:underline hover:text-cyan-400 block truncate" style="color: var(--soc-text-hi);">${item.title}</a>
+                                <a href="${item.link}" class="font-semibold hover:underline hover:text-cyan-400 block truncate" style="color: var(--soc-text-hi);">${item.title}</a>
                                 <span class="text-[10px] opacity-40 font-mono block mt-0.5">${item.id} · ${item.tags.slice(0,2).join(' / ')}</span>
                             </div>
                         </div>
@@ -402,7 +419,7 @@
             const homeView = document.getElementById("view-home");
             const categorizedView = document.getElementById("view-categorized");
             
-            // Reset tab highlights
+            // Flush layout highlighting matrices across structural tab array elements
             ["home", "ctf", "osint", "labs", "research"].forEach(tab => {
                 const el = document.getElementById(`tab-${tab}`);
                 if (el) {
@@ -411,16 +428,19 @@
                 }
             });
 
-            // Activate chosen tab highlight
-            document.getElementById(`tab-${viewName}`).classList.add("nav-tab-active");
-            document.getElementById(`tab-${viewName}`).classList.remove("opacity-50");
+            // Target and set active state visualization constraints
+            const targetTab = document.getElementById(`tab-${viewName}`);
+            if (targetTab) {
+                targetTab.classList.add("nav-tab-active");
+                targetTab.classList.remove("opacity-50");
+            }
 
             if (viewName === "home") {
-                homeView.classList.remove("hidden");
-                categorizedView.classList.add("hidden");
+                if (homeView) homeView.classList.remove("hidden");
+                if (categorizedView) categorizedView.classList.add("hidden");
             } else {
-                homeView.classList.add("hidden");
-                categorizedView.classList.remove("hidden");
+                if (homeView) homeView.add ? homeView.add("hidden") : homeView.classList.add("hidden");
+                if (categorizedView) categorizedView.classList.remove("hidden");
                 renderCategorizedLogs(viewName.toUpperCase());
             }
         }
@@ -428,12 +448,14 @@
         function renderCategorizedLogs(categoryKey) {
             const container = document.getElementById("category-logs-target");
             const titleEl = document.getElementById("category-view-title");
+            if (!container || !titleEl) return;
             
             titleEl.innerText = `// MODULE_LOGS >> ${categoryKey}_ARCHIVE`;
             container.innerHTML = "";
 
             const items = SystemDatabase.filter(item => item.category === categoryKey);
-            document.getElementById("category-view-counter").innerText = `RECORDS: ${items.length}`;
+            const counterEl = document.getElementById("category-view-counter");
+            if (counterEl) counterEl.innerText = `RECORDS: ${items.length}`;
 
             if(items.length === 0) {
                 container.innerHTML = `
@@ -473,6 +495,7 @@
         function toggleTheme() {
             const root = document.documentElement;
             const txt = document.getElementById("theme-text");
+            if (!root || !txt) return;
             if (root.getAttribute("data-theme") === "dark") {
                 root.setAttribute("data-theme", "light");
                 txt.innerText = "DARK";
@@ -482,11 +505,13 @@
             }
         }
 
-        // Live Operational Clock Setup
+        // Live Clock Engine Loop Initiation Vector
         function initClock() {
+            const el = document.getElementById("live-timestamp");
+            if (!el) return;
             const updater = () => {
                 const now = new Date();
-                document.getElementById("live-timestamp").innerText = now.toISOString().replace('T', ' ').substring(0, 19) + 'Z';
+                el.innerText = now.toISOString().replace('T', ' ').substring(0, 19) + 'Z';
             };
             setInterval(updater, 1000);
             updater();
