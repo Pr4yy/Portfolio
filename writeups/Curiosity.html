@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPLINK // LOGS.CURIOSITY</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <style>
+        :root {
+            --soc-bg: #070a13; --soc-bg-panel: #0d1220; --soc-bg-card: #121829;
+            --soc-line: #1e2942; --soc-line-hi: #2d3f66;
+            --soc-text-hi: #f1f5f9; --soc-text-mid: #94a3b8; --soc-text-low: #475569;
+            --color-cy: #22e1ff; --color-gn: #3ddc84; --color-am: #ffb547; --color-rd: #ff5577;
+        }
+        body { background-color: var(--soc-bg); color: var(--soc-text-mid); font-family: 'JetBrains Mono', monospace !important; }
+        .panel-container { background-color: var(--soc-bg-panel); border: 1px solid var(--soc-line); }
+        .card-container { background-color: var(--soc-bg-card); border: 1px solid var(--soc-line); }
+    </style>
+</head>
+<body class="min-h-screen pb-12">
+    <header class="w-full px-6 py-3 border-b sticky top-0 z-50" style="background-color: var(--soc-bg-panel); border-color: var(--soc-line);">
+        <div class="max-w-5xl mx-auto flex justify-between items-center text-xs">
+            <div class="flex items-center gap-2">
+                <a href="../index.html" class="hover:underline" style="color: var(--color-cy); font-weight: bold;">← RETURN_TO_CONSOLE</a>
+                <span style="color: var(--soc-text-low);">/</span>
+                <span class="font-bold text-slate-200">CASE.DFIR-024</span>
+            </div>
+            <span class="px-2 py-0.5 rounded-sm font-bold border text-[10px]" style="border-color: rgba(255,85,119,0.25); color: var(--color-rd); background: rgba(255,85,119,0.05);">● CASE_SEVERITY: HIGH</span>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 mt-8 space-y-6">
+        <!-- OVERVIEW -->
+        <div class="panel-container p-6 rounded-md">
+            <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-3">
+                <span style="color: var(--color-rd);">[REPORT]</span> Blue Team Labs Online - Curiosity Write-Up
+            </h1>
+            <p class="text-xs font-mono mt-2" style="color: var(--soc-text-low);">FILE_PATH: /WRITEUPS/CURIOSITY.HTML · DATE: 2026-06-23</p>
+            <p class="text-xs leading-relaxed mt-4 opacity-90">
+                Host-based forensic timeline reconstruction targeting an unreleased home automation asset theft. This analysis interprets raw filesystem changes to identify staging, metadata entry updates, and anti-forensic execution vectors.
+            </p>
+        </div>
+
+        <!-- METHODOLOGY -->
+        <h3 class="text-xs font-bold uppercase tracking-widest" style="color: var(--soc-text-low);">│ FORENSIC METHODOLOGY & ANALYSIS</h3>
+        <div class="panel-container p-5 rounded-md space-y-3 text-xs leading-relaxed">
+            <p>
+                <strong style="color: var(--color-cy);">1. Parsing USN Journal Records:</strong> The investigation initiated by targeting the NTFS Change Journal (<code class="bg-slate-900 px-1 rounded text-slate-300">$Extend\$UsnJrnl:$J</code>). Using Eric Zimmerman's tool line syntax, raw entries were processed directly into a flattened data model.
+            </p>
+            <p>
+                <strong style="color: var(--color-cy);">2. Structural Filtering Strategy:</strong> Reconstructing actions required filtering the processed output inside Timeline Explorer. Queries focused on extension structures (<code class="bg-slate-900 px-1 rounded text-slate-300">.docx</code>, <code class="bg-slate-900 px-1 rounded text-slate-300">.zip</code>, <code class="bg-slate-900 px-1 rounded text-slate-300">.exe</code>) alongside tracking explicit reason states like <code class="bg-slate-900 px-1 rounded text-slate-300">FileCreate</code>, <code class="bg-slate-900 px-1 rounded text-slate-300">RenameOldName</code>, and <code class="bg-slate-900 px-1 rounded text-slate-300">RenameNewName</code> to map the exact compromise matrix.
+            </p>
+        </div>
+
+        <!-- LAB INVESTIGATION SUBMISSIONS -->
+        <h3 class="text-xs font-bold uppercase tracking-widest" style="color: var(--soc-text-low);">│ INVESTIGATION FEED & ARTIFACT EVIDENCE</h3>
+        
+        <div class="space-y-4">
+
+            <!-- STAGE 1 -->
+            <div class="card-container p-4 rounded-sm">
+                <span class="text-[10px] font-bold block mb-1" style="color: var(--color-am);">STAGE 01 // LANDSCAPE ENUMERATION</span>
+                <p class="text-xs font-bold text-white mb-2">Q1 - Q2: Corporate Document & Invoice Scoping</p>
+                <p class="text-xs opacity-80 mb-3">Quantifying unique company invoice assets and corporate .docx records present on the user's workstation during acquisition.</p>
+                <details class="text-xs">
+                    <summary class="cursor-pointer font-bold select-none hover:text-cyan-400" style="color: var(--color-cy);">[▸ INTERPRET_FORENSIC_EVIDENCE]</summary>
+                    <div class="mt-3 p-3 bg-slate-900/50 rounded border border-slate-800 text-[11px] space-y-4">
+                        <div><span class="text-emerald-400 font-bold">Analysis:</span> Filtering the parsed entries for explicit name references and extension flags mapped the active boundaries of financial and corporate documentation.</div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                            <div class="bg-slate-900 p-2 rounded border border-slate-800 text-center">
+                                <span class="text-[10px] block opacity-40 mb-1">Curiosity#1.png</span>
+                                <img src="img/Curiosity#1.png" alt="Curiosity#1.png" class="rounded border border-slate-700 max-h-32 mx-auto">
+                            </div>
+                            <div class="bg-slate-900 p-2 rounded border border-slate-800 text-center">
+                                <span class="text-[10px] block opacity-40 mb-1">Curiosity#2.png</span>
+                                <img src="img/Curiosity#2.png" alt="Curiosity#2.png" class="rounded border border-slate-700 max-h-32 mx-auto">
+                            </div>
+                            <div class="bg-slate-900 p-2 rounded border border-slate-800 text-center">
+                                <span class="text-[10px] block opacity-40 mb-1">Curiosity#7.png</span>
+                                <img src="img/Curiosity#7.png" alt="Curiosity#7.png" class="rounded border border-slate-700 max-h-32 mx-auto">
+                            </div>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <!-- STAGE 2 -->
+            <div class="card-container p-4 rounded-sm">
+                <span class="text-[10px] font-bold block mb-1" style="color: var(--color-am);">STAGE 02 // PROPERTY DEVELOPMENT IDENTIFICATION</span>
+                <p class="text-xs font-bold text-white mb-2">Q3 - Q6: Unreleased Product Profiling & Renaming Matrix</p>
+                <p class="text-xs opacity-80 mb-3">Isolating target project names, versioning shifts, post-rename MFT entries, and initial disk generation timestamps.</p>
+                <details class="text-xs">
+                    <summary class="cursor-pointer font-bold select-none hover:text-cyan-400" style="color: var(--color-cy);">[▸ INTERPRET_FORENSIC_EVIDENCE]</summary>
+                    <div class="mt-3 p-3 bg-slate-900/50 rounded border border-slate-800 text-[11px] space-y-4">
+                        <div><span class="text-emerald-400 font-bold">Analysis:</span> Isolating home automation references exposed the source file lifecycle. Tracking renaming sequences maps modification events to updated entry indices.</div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                            <div class="bg-slate-900 p-2 rounded border border-slate-800 text-center">
+                                <span class="text-[10px] block opacity-40 mb-1">Curiosity #3.png</span>
+                                <img src="img/Curiosity #3.png" alt="Curiosity #3.png" class="rounded border border-slate-700 max-h-32 mx-auto">
+                            </div>
+                            <div class="bg-slate-900 p-2 rounded border border-slate-800 text-center">
+                                <span class="text-[10px] block opacity-40 mb-1">Curiosity #4.png</span>
+                                <img src="img/Curiosity #4.png" alt="Curiosity #4.png" class="rounded border border-slate-700 max-h-32 mx-auto">
+                            </div>
+                            <div class="bg-slate-900 p-2 rounded border border-slate-800 text-center">
+                                <span class="text-[10px] block opacity-40 mb-1">Curiosity #5.png</span>
+                                <img src="img/Curiosity #5.png" alt="Curiosity #5.png" class="rounded border border-slate-700 max-h-32 mx-auto">
+                            </div>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <!-- STAGE 3 -->
+            <div class="card-container p-4 rounded-sm">
+                <span class="text-[10px] font-bold block mb-1" style="color: var(--color-rd);">STAGE 03 // ARCHIVE PACKAGING TIMELINES</span>
+                <p class="text-xs font-bold text-white mb-2">Q7 - Q8: Source Code Consolidation & Archive Verification</p>
+                <p class="text-xs opacity-80 mb-3"> pinpointing the container name holding staged repositories and extracting explicit creation log execution markers.</p>
+                <details class="text-xs">
+                    <summary class="cursor-pointer font-bold select-none hover:text-cyan-400" style="color: var(--color-cy);">[▸ INTERPRET_FORENSIC_EVIDENCE]</summary>
+                    <div class="mt-3 p-3 bg-slate-900/50 rounded border border-slate-800 text-[11px] space-y-4">
+                        <div><span class="text-emerald-400 font-bold">Analysis:</span> Monitoring archive transaction flags isolates compression patterns used during exfiltration preparation steps.</div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                            <div class="bg-slate-900 p-2 rounded border border-slate-800 text-center">
+                                <span class="text-[10px] block opacity-40 mb-1">Curiosity #6.png</span>
+                                <img src="img/Curiosity #6.png" alt="Curiosity #6.png" class="rounded border border-slate-700 max-h-32 mx-auto">
+                            </div>
+                            <div class="bg-slate-900 p-2 rounded border border-slate-800 text-center">
+                                <span class="text-[10px] block opacity-40 mb-1">Curiosity#8.png</span>
+                                <img src="img/Curiosity#8.png" alt="Curiosity#8.png" class="rounded border border-slate-700 max-h-32 mx-auto">
+                            </div>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <!-- STAGE 4 -->
+            <div class="card-container p-4 rounded-sm">
+                <span class="text-[10px] font-bold block mb-1" style="color: var(--color-rd);">STAGE 04 // EVASION TRACKING</span>
+                <p class="text-xs font-bold text-white mb-2">Q9 - Q10: Track Concealment & Alternative Browser Deployment</p>
+                <p class="text-xs opacity-80 mb-3">Identifying the portable browser wrapper and parsing disk integration timestamps alongside corresponding storage entry markers.</p>
+                <details class="text-xs">
+                    <summary class="cursor-pointer font-bold select-none hover:text-cyan-400" style="color: var(--color-cy);">[▸ INTERPRET_FORENSIC_EVIDENCE]</summary>
+                    <div class="mt-3 p-3 bg-slate-900/50 rounded border border-slate-800 text-[11px] space-y-4">
+                        <div><span class="text-emerald-400 font-bold">Analysis:</span> Extracting installation vectors highlights attempts to circumvent normal proxy/logging parameters via unindexed local application instances.</div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                            <div class="bg-slate-900 p-2 rounded border border-slate-800 text-center">
+                                <span class="text-[10px] block opacity-40 mb-1">Curiosity#9.png</span>
+                                <img src="img/Curiosity#9.png" alt="Curiosity#9.png" class="rounded border border-slate-700 max-h-32 mx-auto">
+                            </div>
+                            <div class="bg-slate-900 p-2 rounded border border-slate-800 text-center">
+                                <span class="text-[10px] block opacity-40 mb-1">Curiosity#10.png</span>
+                                <img src="img/Curiosity#10.png" alt="Curiosity#10.png" class="rounded border border-slate-700 max-h-32 mx-auto">
+                            </div>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+        </div>
+    </main>
+</body>
+</html>
